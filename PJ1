@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Photo Album</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            text-align: center;
+            margin: 0;
+            padding: 20px;
+        }
+        h1 {
+            color: #333;
+        }
+        .album-info {
+            margin-bottom: 20px;
+            color: #555;
+        }
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 10px;
+            max-width: 800px;
+            margin: auto;
+        }
+        .gallery img {
+            width: 100%;
+            height: auto;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: transform 0.3s;
+        }
+        .gallery img:hover {
+            transform: scale(1.05);
+        }
+        .lightbox {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+        }
+        .lightbox img {
+            max-width: 90%;
+            max-height: 80%;
+            border-radius: 10px;
+            transition: transform 0.3s;
+        }
+        .buttons {
+            margin-top: 10px;
+        }
+        .buttons button {
+            margin: 5px;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .close-btn { background-color: red; color: white; display: none; }
+        .download-btn { background-color: green; color: white; }
+        .zoom-btn { background-color: blue; color: white; }
+    </style>
+</head>
+<body>
+    <h1>My Photo Album</h1>
+    <p class="album-info">This album contains beautiful memories.</p>
+    <div class="gallery">
+        <img src="https://scontent.fbkk9-2.fna.fbcdn.net/v/t51.75761-15/483340217_18483304723003817_87513822887628886_n.jpg?_nc_cat=1&ccb=1-7&_nc_sid=127cfc&_nc_ohc=zQow0ek50PsQ7kNvgFE_wkl&_nc_oc=Adi2D0kuozIhZZH9D0EtTW-HKarxU-fnsT6wT1q1UFU9GQfp3ehl55m10d9MASQSgNDmJS4aNam9S7vGLikBXOCw&_nc_zt=23&_nc_ht=scontent.fbkk9-2.fna&_nc_gid=AJnjiLwjhR_kuOXtaCX4fhs&oh=00_AYHb_GOqfKgW9S3rnT96VhYW_m8mB7Mb7v84evLm2D9nCg&oe=67D3125F" onclick="openLightbox(this)">
+        <img src="https://via.placeholder.com/150" onclick="openLightbox(this)">
+        <img src="https://via.placeholder.com/150" onclick="openLightbox(this)">
+        <img src="https://via.placeholder.com/150" onclick="openLightbox(this)">
+    </div>
+    
+    <div class="lightbox" id="lightbox">
+        <img id="lightbox-img">
+        <div class="buttons">
+            <button class="zoom-btn" onclick="zoomImage()">Zoom</button>
+            <a id="download-link" download><button class="download-btn">Download</button></a>
+            <button class="close-btn" id="close-btn" onclick="resetZoom()">Close</button>
+        </div>
+    </div>
+
+    <script>
+        function openLightbox(img) {
+            document.getElementById("lightbox").style.display = "flex";
+            document.getElementById("lightbox-img").src = img.src;
+            document.getElementById("download-link").href = img.src;
+        }
+        function zoomImage() {
+            let img = document.getElementById("lightbox-img");
+            let closeBtn = document.getElementById("close-btn");
+            if (img.style.transform === "scale(1.5)") {
+                img.style.transform = "scale(1)";
+                closeBtn.style.display = "none";
+            } else {
+                img.style.transform = "scale(1.5)";
+                closeBtn.style.display = "inline-block";
+            }
+        }
+        function resetZoom() {
+            let img = document.getElementById("lightbox-img");
+            img.style.transform = "scale(1)";
+            document.getElementById("close-btn").style.display = "none";
+        }
+    </script>
+</body>
+</html>
